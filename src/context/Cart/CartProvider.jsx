@@ -12,13 +12,19 @@ export const CartProvider = ({ children }) => {
     }
   }
 
+  const updateLocalStorage = () => {
+    const cart = JSON.stringify([...state.cart])
+    localStorage.setItem('cart', cart);
+  }
+
   const [state, dispatch] = useReducer(cartReducer, {}, init);
 
   const addToCart = (payload) => {
     dispatch({
       type: TYPES.ADD_TO_CART,
       payload
-    })
+    });
+    updateLocalStorage();
   }
 
   const emptyCart = () => {
@@ -31,7 +37,8 @@ export const CartProvider = ({ children }) => {
     dispatch({
       type: TYPES.REMOVE_FROM_CART,
       payload
-    })
+    });
+    updateLocalStorage();
   }
 
   

@@ -5,9 +5,16 @@ export const cartReducer = (state, action) => {
 
     switch (type) {
         case TYPES.ADD_TO_CART:
+            const product = state.cart.find(item => item.id === payload.id);
+            if (product) {
+                return {
+                    ...state,
+                    cart: state.cart.map(item => item.id === payload.id ? { ...item, quantity: item.quantity + 1 } : item)
+                }
+            }
             return {
                 ...state,
-                cart: [...state.cart, payload]
+                cart: [...state.cart, { ...payload, quantity: 1 }]
             }
         case TYPES.EMPTY_CART:
             return {
@@ -15,10 +22,17 @@ export const cartReducer = (state, action) => {
                 cart: []
             }
         case TYPES.REMOVE_FROM_CART:
+            if (payload.quantity === 1) {
+                return {
+                    ...state,
+                    cart: state.cart.filter(item => item.id !== payload.id)
+                }
+            }
             return {
                 ...state,
-                cart: state.cart.filter(item => item.id !== payload.id)
+                cart: state.cart.map(item => item.id === payload.id ? { ...item, quantity: item.quantity - 1 } : item)
             }
+            
         default:
             return state
     }

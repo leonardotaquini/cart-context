@@ -1,8 +1,11 @@
+import { Navbar } from "../components/Navbar"
 
 export const Home = () => {
   return (
-    <div className='vh-100 w-100 d-flex justify-content-center align-items-center'>
-      <h1>Cart Page</h1>
+    <div className='vh-100 d-flex flex-column'>
+      <Navbar/>
+      <h1 className="m-auto">Cart Page</h1>
+      
     </div>
   )
 }

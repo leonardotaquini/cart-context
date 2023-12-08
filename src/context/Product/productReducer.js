@@ -7,8 +7,15 @@ export const productReducer = (state, action) => {
         case TYPES.GET_PRODUCTS:            
           return {
             ...state,
-            products: payload
+            products: payload,
+            isLoading: false
           }
+          case TYPES.SET_PRODUCTS:
+            return {
+              ...state,
+              products: payload,
+              isLoading: false
+            }
     
         default:
             return {
