@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 import { CartContext } from "./CartContext"
 import { cartReducer } from "./cartReducer"
 import { TYPES } from "../types/types"
@@ -12,19 +12,25 @@ export const CartProvider = ({ children }) => {
     }
   }
 
+  
+  
   const updateLocalStorage = () => {
     const cart = JSON.stringify([...state.cart])
     localStorage.setItem('cart', cart);
   }
-
+  
   const [state, dispatch] = useReducer(cartReducer, {}, init);
+  
+  useEffect(() => {
+    updateLocalStorage();
+  }, [state.cart])
 
+  
   const addToCart = (payload) => {
     dispatch({
       type: TYPES.ADD_TO_CART,
       payload
     });
-    updateLocalStorage();
   }
 
   const emptyCart = () => {
@@ -38,7 +44,6 @@ export const CartProvider = ({ children }) => {
       type: TYPES.REMOVE_FROM_CART,
       payload
     });
-    updateLocalStorage();
   }
 
   
